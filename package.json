@@ -1,0 +1,19 @@
+{
+  "name": "dynamic-portfolio-workspace",
+  "private": true,
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "npm --prefix apps/api run start:dev",
+    "dev:web": "npm --prefix apps/web run dev",
+    "build": "npm --prefix apps/api run build && npm --prefix apps/web run build",
+    "typecheck": "npm --prefix apps/api run typecheck && npm --prefix apps/web run typecheck",
+    "install:all": "npm install && npm --prefix apps/api install && npm --prefix apps/web install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
