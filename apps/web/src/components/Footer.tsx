@@ -49,7 +49,6 @@ export function Footer({ profile }: FooterProps) {
 
       <div className="footer-bottom">
         <p>© {currentYear} {profile.name}. All rights reserved.</p>
-        <p className="built-with">Built with React, NestJS & TypeScript</p>
       </div>
     </footer>
   );
