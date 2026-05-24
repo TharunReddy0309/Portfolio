@@ -4,6 +4,12 @@ import {
   ExperienceEntry,
   ProjectsResponse,
 } from '../types';
+import {
+  FALLBACK_PROFILE,
+  FALLBACK_SKILLS,
+  FALLBACK_EXPERIENCE,
+  getFallbackProjects,
+} from './fallbackData';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -16,40 +22,56 @@ class ApiClient {
 
   private async fetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
-    try {
-      const response = await fetch(url, {
-        ...options,
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
-      });
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
 
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status} ${response.statusText}`);
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error(`Failed to fetch ${endpoint}:`, error);
-      throw error;
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
     }
+
+    return response.json();
   }
 
   async getProfile(): Promise<PortfolioProfile> {
-    return this.fetch<PortfolioProfile>('/api/profile');
+    try {
+      return await this.fetch<PortfolioProfile>('/api/profile');
+    } catch (error) {
+      console.warn('Failed to fetch profile from API, falling back to local static data:', error);
+      return FALLBACK_PROFILE;
+    }
   }
 
   async getSkills(): Promise<SkillCategory[]> {
-    return this.fetch<SkillCategory[]>('/api/skills');
+    try {
+      return await this.fetch<SkillCategory[]>('/api/skills');
+    } catch (error) {
+      console.warn('Failed to fetch skills from API, falling back to local static data:', error);
+      return FALLBACK_SKILLS;
+    }
   }
 
   async getSkillsByCategory(category: string): Promise<any[]> {
-    return this.fetch<any[]>(`/api/skills/${encodeURIComponent(category)}`);
+    try {
+      return await this.fetch<any[]>(`/api/skills/${encodeURIComponent(category)}`);
+    } catch (error) {
+      console.warn(`Failed to fetch skills category ${category} from API, falling back to local static data:`, error);
+      const cat = FALLBACK_SKILLS.find((c) => c.category === category);
+      return cat ? cat.items : [];
+    }
   }
 
   async getExperience(): Promise<ExperienceEntry[]> {
-    return this.fetch<ExperienceEntry[]>('/api/experience');
+    try {
+      return await this.fetch<ExperienceEntry[]>('/api/experience');
+    } catch (error) {
+      console.warn('Failed to fetch experience from API, falling back to local static data:', error);
+      return FALLBACK_EXPERIENCE;
+    }
   }
 
   async addExperience(experience: ExperienceEntry): Promise<ExperienceEntry> {
@@ -67,7 +89,12 @@ class ApiClient {
   }
 
   async getProjects(username: string): Promise<ProjectsResponse> {
-    return this.fetch<ProjectsResponse>(`/api/projects?username=${encodeURIComponent(username)}`);
+    try {
+      return await this.fetch<ProjectsResponse>(`/api/projects?username=${encodeURIComponent(username)}`);
+    } catch (error) {
+      console.warn('Failed to fetch projects from API, falling back to local static data:', error);
+      return getFallbackProjects(username);
+    }
   }
 }
 
