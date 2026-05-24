@@ -93,4 +93,5 @@ export const SKILL_NAME_MAPPING: Record<string, string> = {
   'Postman': 'postman',
   'Supabase': 'supabase',
   'Figma': 'figma',
+  'Jira': 'jira',
 };
