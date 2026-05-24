@@ -134,6 +134,7 @@ const rawSkills = [
       { name: 'VS Code' },
       { name: 'Linux' },
       { name: 'Docker' },
+      { name : 'Jira'},
       { name: 'Postman' },
       { name: 'Supabase' },
     ],
