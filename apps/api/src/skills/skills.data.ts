@@ -57,7 +57,7 @@ export const SKILLS_DATA: SkillCategory[] = [
       { name: 'VS Code' },
       { name: 'Linux' },
       { name: 'Docker' },
-      {name : 'Jira' },
+      { name : 'Jira' },
       { name: 'Postman' },
       { name: 'Supabase' },
     ],
@@ -93,4 +93,5 @@ export const SKILL_NAME_MAPPING: Record<string, string> = {
   'Postman': 'postman',
   'Supabase': 'supabase',
   'Figma': 'figma',
+  'Jira' :'jira'
 };
