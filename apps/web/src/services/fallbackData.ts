@@ -3,7 +3,7 @@ import { PortfolioProfile, SkillCategory, ExperienceEntry, ProjectsResponse } fr
 export const FALLBACK_PROFILE: PortfolioProfile = {
   name: 'Bhumireddy Tharun Reddy',
   shortName: 'Tharun Reddy',
-  tagline: 'Aspiring Software Development Engineer | Passionate in Backend, Scalable Systems, and AI/ML',
+  tagline: 'Aspiring Software Development Engineer | Amazon ML Summer School\'26 | Passionate in Backend, Scalable Systems, and AI/ML',
   title: ' ',
   location: 'Visakhapatnam, India',
   email: 'tharunreddy.b24@iiits.in',
